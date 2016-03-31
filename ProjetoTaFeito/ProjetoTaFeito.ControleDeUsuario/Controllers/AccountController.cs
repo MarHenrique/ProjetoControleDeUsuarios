@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -12,20 +13,28 @@ using ProjetoTaFeito.ControleDeUsuario.Models;
 
 namespace ProjetoTaFeito.ControleDeUsuario.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext(); 
 
         public AccountController()
         {
         }
 
+        public ActionResult ListarUsers()
+        {
+            var userList = db.RegisterUsers;
+            return View(userList);
+        } 
+
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+
         }
 
         public ApplicationSignInManager SignInManager
@@ -51,6 +60,8 @@ namespace ProjetoTaFeito.ControleDeUsuario.Controllers
                 _userManager = value;
             }
         }
+
+        public RegisterViewModel Registers { get ; set; }
 
         //
         // GET: /Account/Login
@@ -292,6 +303,7 @@ namespace ProjetoTaFeito.ControleDeUsuario.Controllers
             {
                 return View("Error");
             }
+            
             var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
@@ -481,5 +493,25 @@ namespace ProjetoTaFeito.ControleDeUsuario.Controllers
             }
         }
         #endregion
+
+        public ActionResult Edit(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult Details(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult Create()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

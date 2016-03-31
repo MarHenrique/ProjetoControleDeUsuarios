@@ -29,5 +29,11 @@ namespace ProjetoTaFeito.ControleDeUsuario.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<ProjetoTaFeito.ControleDeUsuario.Models.Prestador> Prestadors { get; set; }
+
+        public System.Data.Entity.DbSet<ProjetoTaFeito.ControleDeUsuario.Models.ApplicationUser> ApplicationUsers { get; set; }
+
+        public System.Data.Entity.DbSet<ProjetoTaFeito.ControleDeUsuario.Models.RegisterViewModel> RegisterUsers { get; set; }
     }
 }

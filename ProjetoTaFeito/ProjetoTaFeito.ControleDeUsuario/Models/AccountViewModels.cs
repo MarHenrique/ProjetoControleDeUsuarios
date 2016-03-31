@@ -29,11 +29,11 @@ namespace ProjetoTaFeito.ControleDeUsuario.Models
         public string Provider { get; set; }
 
         [Required]
-        [Display(Name = "Code")]
+        [Display(Name = "Codigo")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display(Name = "Lembrar neste navegador?")]
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }
@@ -55,30 +55,59 @@ namespace ProjetoTaFeito.ControleDeUsuario.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Senha")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Lembre-me?")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
+        [Key]
+        public int Id { get; set; }
+        [Required(ErrorMessage = "Nome é obrigatório")]
+        [MaxLength(50, ErrorMessage = "O máximo de caracteres é {0}")]
+        public string Nome { get; set; }
+
+        [Required(ErrorMessage = "Sobrenome é obrigatório")]
+        [MaxLength(50, ErrorMessage = "O máximo de caracteres é {0}")]
+        public string SobreNome { get; set; }
+
+
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Numero invalido")]
+        [RegularExpression(@"^\(?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$", ErrorMessage = "Numero invalido")]
+        [Display(Name = "Telefone")]
+        public string TelefoneFixo { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        //[DisplayFormat(DataFormatString = "{0:(##)####-####}", ApplyFormatInEditMode = true)]
+        [RegularExpression(@"^\(?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$", ErrorMessage = "Celular invalido")]
+        [Display(Name = "Celular")]
+        public string TelefoneCelular { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} precisa de no minimo {2} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Senha")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmar senha")]
+        [Compare("Password", ErrorMessage = "A senha não está compativel.")]
         public string ConfirmPassword { get; set; }
+
+        public EnumTipoUsuario TipoUsuario { get; set; }
+    }
+
+    public enum EnumTipoUsuario
+    {
+        Prestador, Cliente
     }
 
     public class ResetPasswordViewModel
@@ -89,16 +118,17 @@ namespace ProjetoTaFeito.ControleDeUsuario.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} precisa de no minimo {2} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Senha")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmar senha")]
+        [Compare("Password", ErrorMessage = "A senha não está compativel.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Codigo")]
         public string Code { get; set; }
     }
 
